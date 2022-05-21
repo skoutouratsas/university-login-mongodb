@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MY APP</title>
+</head>
+<body>
+  Your Grades:
+
+  <ul class="quotes">
+  <% for(var i=0; i<quotes.length; i++) {%>
+    <li class="quote">
+      <span><%= quotes[i].class %></span>
+      <span><%= quotes[i].grade %></span>
+    </li>
+  <% } %>
+  </ul>
+
+
+
+
+</body>
+</html>
+<script>
+// main.js
+var update = document.getElementById('update')
+
+update.addEventListener('click', function () {
+    fetch('quotes', {
+  method: 'put',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    'name': 'Darth Vader',
+    'quote': 'I find your lack of faith disturbing.'
+  })
+}).then(res => {
+  if (res.ok) return res.json()
+})
+.then(data => {
+  console.log(data)
+  window.location.reload(true)
+})
+})
+
+
+
+var del = document.getElementById('delete')
+
+del.addEventListener('click', function () {
+  fetch('quotes', {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'name': 'Darth Vader'
+    })
+  })
+  .then(res => {
+    if (res.ok) return res.json()
+  }).
+  then(data => {
+    console.log(data)
+    window.location.reload()
+  })
+})
+
+</script>

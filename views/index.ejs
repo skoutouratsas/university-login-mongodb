@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MY APP</title>
+</head>
+<body>
+  <span><%= course%></span>
+
+  <ul class="quotes">
+  <% for(var i=0; i<data.length; i++) {%>
+    <li class="quote">
+      <span><%= data[i].username %></span>
+      <%for(var j=0; j<data[i].attendance.length; j++){if(data[i].attendance[j].class== course ) { %> <span><%=data[i].attendance[j].grade%></span><% }} %>
+    </li>
+  <% } %>
+  </ul>
+
+  <form >
+    <input type="text" placeholder="name" name="name">
+    <input type="text" placeholder="change grade to" name="updategrade">
+    <button id="update" >Update</button>
+  
+
+  <div>
+    <input type="text" placeholder="delete student" name="quote">
+    <button id="delete" >Delete</button>
+  </div>
+
+  <div>
+    <input type="text" placeholder="new name" name="name">
+    <input type="text" placeholder="new grade" name="quote">
+    <button id="new" >New Student</button>
+  </div>
+
+</form>
+</body>
+</html>
+<script>
+// main.js
+var update = document.getElementById('update')
+
+update.addEventListener('click', function () {
+  
+    fetch('/users', {
+  method: 'put',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    'username': 'Darth Vader',
+    'grade': document.getElementsByTagName("updategrade").value
+  })
+}).then(res => {
+  if (res.ok) return res.json()
+})
+.then(data => {
+  console.log(data)
+  window.location.reload(true)
+})
+})
+
+
+
+var del = document.getElementById('delete')
+
+del.addEventListener('click', function () {
+  fetch('quotes', {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'name': 'Darth Vader'
+    })
+  })
+  .then(res => {
+    if (res.ok) return res.json()
+  }).
+  then(data => {
+    console.log(data)
+    window.location.reload()
+  })
+})
+
+</script>
